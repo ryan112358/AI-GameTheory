@@ -15,7 +15,7 @@ warnings.filterwarnings('error')
 # #D*(1+#A+#B+#C) parameters
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data')
+# parser.add_argument('--data') # not currently supported
 parser.add_argument('--trials', type=int, default=1)
 parser.add_argument('--train', type=int, default=100)
 parser.add_argument('--test', type=int, default=100)
@@ -84,6 +84,8 @@ def loglike(inputs, output, A, B, X, Y):
         if probs[i] == 0: return np.inf
     return -np.log(probs).sum()
 
+# Note: efficiency could be improved greatly if the jacobian of the log-likelihood
+# function were provided
 def learn_mle(inputs, output, X,Y):
     def loglike2(params):
         A, B = reconstruct(inputs, output, params)
